@@ -10,8 +10,12 @@ Meteor.methods({
     return shell.ls('-A');
   },
 
+  'ping'() {
+    return shell.exec('lsof -t -i :8000').code === 0 ? true : false;
+  },
+
   'run'() {
-    return shell.cd('~/Code/prototyper/.prototype').exec('npm start', {async:true}, (code, stdout, stderr) => {
+    shell.cd('~/Code/prototyper/.prototype').exec('npm start', {async:true}, (code, stdout, stderr) => {
       console.log('Exit code:', code);
       console.log('Program output:', stdout);
       console.log('Program stderr:', stderr);
@@ -24,5 +28,5 @@ Meteor.methods({
       console.log('Program output:', stdout);
       console.log('Program stderr:', stderr);
     });
-  }
+  },
 });
