@@ -3,12 +3,17 @@
 </head>
 
 <body>
-  {{> hello}}
+  {{> main }}
 </body>
 
-<template name="hello">
-  <button class="mtr-list">List</button>
-  <button class="mtr-ping">Ping!</button>
+<template name="main">
+  <div>
+    {{ #if running }}
+      Server is running. Visit <a class="mtr-view">http://localhost:8000</a>.
+    {{ else }}
+      Server is stopped
+    {{ /if }}
+  </div>
   {{ #if running }}
     <button class="mtr-stop">Stop</button>
   {{ else }}

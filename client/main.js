@@ -2,38 +2,31 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { Electron } from 'meteor/meson:electron';
+import opn from 'opn';
 
 import './main.html';
 
-Session.setDefault('prototypeRunning', false);
-
-const options = {
-  title: "Basic Notification",
-  body: "Short message part"
-};
-
 Meteor.startup(() => {
-  Meteor.call('stop');
+  Meteor.call('ping', (err, success) => {
+    if(success) {
+      Session.setDefault('prototypeRunning', true);
+      Meteor.call('stop');
+    } else {
+      Session.setDefault('prototypeRunning', false);
+    }
+  });
 });
 
-Template.hello.helpers({
+Template.main.helpers({
   running() {
     return Session.get('prototypeRunning');
   }
 });
 
-Template.hello.events({
-  'click .mtr-list'(event, instance) {
-    Meteor.call('ls', (err, success) => {
-      console.log(success ? success : 'Error');
-    });
-  },
-
-  'click .mtr-ping'(event, instance) {
-    // Electron.isDesktop ? new Notification(options.title, options) : false;
-    Meteor.call('ping', (err, success) => {
-      console.log(success);
-    });
+Template.main.events({
+  'click .mtr-view'(event, instance) {
+    event.preventDefault();
+    opn('http://localhost:8000');
   },
 
   'click .mtr-run'(event, instance) {
