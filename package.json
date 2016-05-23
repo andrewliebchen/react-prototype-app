@@ -1,0 +1,17 @@
+{
+  "name": "electron",
+  "private": true,
+  "scripts": {
+    "start": "meteor --settings settings.json"
+  },
+  "dependencies": {
+    "meteor-node-stubs": "~0.2.0",
+    "shelljs": "^0.7.0"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
