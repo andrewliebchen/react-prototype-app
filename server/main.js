@@ -17,7 +17,15 @@ Meteor.methods({
     // Set up project locally
     // `npm install` takes forever, just copy contents into new prototype
     shell.mkdir('-p', projectPath);
-    shell.cp('-r', `${sourcePath}/*`, projectPath);
+    shell.exec(`cp -R ${sourcePath}/. ${projectPath}`, {async: true}, (code, stdout, stderr) => {
+      console.log('copied');
+      shell.cd(projectPath);
+      shell.exec(`npm install`, {async: true}, (code, stdout, stderr) => {
+        console.log('Exit code:', code);
+        console.log('Program output:', stdout);
+        console.log('Program stderr:', stderr);
+      });
+    });
 
     // Store project in DB
     return Projects.insert({
@@ -37,7 +45,7 @@ Meteor.methods({
 
   'run'(activeProject) {
     const activePath = `~/.prototype/${slug(Projects.findOne(activeProject).name)}`;
-    shell.cd(activePath).exec('npm start', {async:true}, (code, stdout, stderr) => {
+    shell.cd(activePath).exec('npm start', {async: true}, (code, stdout, stderr) => {
       console.log('Exit code:', code);
       console.log('Program output:', stdout);
       console.log('Program stderr:', stderr);
