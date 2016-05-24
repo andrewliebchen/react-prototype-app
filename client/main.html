@@ -29,7 +29,10 @@
 
 <template name="main">
   <div class="main">
-    <h3>{{ project.name }}</h3>
+    <header>
+      <h3>{{ project.name }}</h3>
+      <button class="btn btn-default mtr-open-project">Show project files in finder</button>
+    </header>
     <div>
       {{ #if running }}
         Server is running. Visit <a class="mtr-view">http://localhost:8000</a>.
@@ -43,9 +46,6 @@
       {{ else }}
         <button class="btn btn-positive mtr-run">Run</button>
       {{ /if }}
-    </div>
-    <div>
-      <button class="btn btn-default">Open project files</button>
     </div>
   </div>
 </template>

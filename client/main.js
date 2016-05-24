@@ -56,6 +56,11 @@ Template.main.helpers({
 });
 
 Template.main.events({
+  'click .mtr-open-project'(event, instance) {
+    event.preventDefault();
+    Meteor.call('openProjectFiles', Session.get('activeProject'));
+  },
+
   'click .mtr-view'(event, instance) {
     event.preventDefault();
     Meteor.call('openPrototype');

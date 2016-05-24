@@ -8,7 +8,7 @@ Meteor.startup(() => {
 });
 
 Meteor.methods({
-  'createProject'(args) {
+  createProject(args) {
     const projectSlug = slug(args.name);
     // FIXME: How to get path to local files?
     const sourcePath = '~/Code/prototyper/.prototype_src';
@@ -35,15 +35,20 @@ Meteor.methods({
     });
   },
 
-  'openPrototype'() {
+  openProjectFiles(projectId) {
+    const projectSlug = Projects.findOne(projectId).slug;
+    opn(`~/Sites/${Meteor.settings.appName}/${projectSlug}`);
+  },
+
+  openPrototype() {
     opn(`http://localhost:${Meteor.settings.prototypePort}`);
   },
 
-  'ping'() {
+  ping() {
     return shell.exec(`lsof -t -i :${Meteor.settings.prototypePort}`).code === 0 ? true : false;
   },
 
-  'run'(activeProject) {
+  run(activeProject) {
     const activePath = `~/.prototype/${slug(Projects.findOne(activeProject).name)}`;
     shell.cd(activePath).exec('npm start', {async: true}, (code, stdout, stderr) => {
       console.log('Exit code:', code);
@@ -52,7 +57,7 @@ Meteor.methods({
     });
   },
 
-  'stop'() {
+  stop() {
     shell.exec('kill -9 $(lsof -t -i :8000)', {async:true}, (code, stdout, stderr) => {
       console.log('Exit code:', code);
       console.log('Program output:', stdout);
