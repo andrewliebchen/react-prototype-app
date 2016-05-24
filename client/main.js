@@ -10,8 +10,6 @@ import '../node_modules/photon/dist/css/photon.css';
 Session.setDefault('projectFiles', null);
 
 Meteor.startup(() => {
-  // Session.setDefault('activeProject', Projects.findOne()._id);
-
   Meteor.call('ping', (err, success) => {
     if(success) {
       Session.setDefault('prototypeRunning', true);
@@ -43,19 +41,17 @@ Template.projectNavItem.helpers({
   },
 });
 
-Template.projectNavItem.events({
-  'click .mtr-nav-item'(event, instance) {
-    Session.set('activeProject', this.project._id);
-  },
-});
-
-Template.main.helpers({
-  project() {
-    return Projects.findOne(Session.get('activeProject'));
-  },
-});
+// Template.projectNavItem.events({
+//   'click .mtr-nav-item'(event, instance) {
+//     Session.set('activeProject', this.project._id);
+//   },
+// });
 
 Template.projectContent.helpers({
+  project() {
+    return Projects.findOne(FlowRouter.getParam('id'));
+  },
+
   running() {
     return Session.get('prototypeRunning');
   },

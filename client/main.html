@@ -2,12 +2,20 @@
   <title>simple</title>
 </head>
 
-<body>
+<template name="layout">
   <div class="container">
     {{> sidebar }}
-    {{> main }}
+    <div class="main">
+      {{> Template.dynamic template=content }}
+    </div>
   </div>
-</body>
+</template>
+
+<template name="home">
+  <div>
+    Hi there.
+  </div>
+</template>
 
 <template name="sidebar">
   <aside class="sidebar">
@@ -22,15 +30,9 @@
 </template>
 
 <template name="projectNavItem">
-  <div class="nav-group-item mtr-nav-item {{ #if active }}active{{ /if }}">
+  <a href="/projects/{{ project._id }}" class="nav-group-item mtr-nav-item {{ #if active }}active{{ /if }}">
     {{ project.name }}
-  </div>
-</template>
-
-<template name="main">
-  <div class="main">
-    {{> projectContent project=project }}
-  </div>
+  </a>
 </template>
 
 <template name="projectContent">
