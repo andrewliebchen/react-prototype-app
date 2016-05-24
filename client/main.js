@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
 import { Template } from 'meteor/templating';
 import { Electron } from 'meteor/meson:electron';
-import opn from 'opn';
 
 import './main.html';
 
@@ -26,7 +25,7 @@ Template.main.helpers({
 Template.main.events({
   'click .mtr-view'(event, instance) {
     event.preventDefault();
-    opn('http://localhost:8000');
+    Meteor.call('open', 'http://localhost:8000');
   },
 
   'click .mtr-run'(event, instance) {

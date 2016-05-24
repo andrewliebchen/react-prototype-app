@@ -1,13 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import shell from 'shelljs';
+import opn from 'opn';
 
 Meteor.startup(() => {
   // code to run on server at startup
 });
 
 Meteor.methods({
-  'ls'() {
-    return shell.ls('-A');
+  'open'(address) {
+    opn(address);
   },
 
   'ping'() {
