@@ -10,7 +10,8 @@
     "opn": "^4.0.2",
     "path-browserify": "0.0.0",
     "photon": "connors/photon",
-    "shelljs": "^0.7.0"
+    "shelljs": "^0.7.0",
+    "slug": "^0.9.1"
   },
   "version": "1.0.0",
   "main": "index.js",

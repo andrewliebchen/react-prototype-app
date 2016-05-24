@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import shell from 'shelljs';
 import opn from 'opn';
+import slug from 'slug';
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -8,8 +9,20 @@ Meteor.startup(() => {
 
 Meteor.methods({
   'createProject'(args) {
+    const projectSlug = slug(args.name);
+    // FIXME: How to get path to local files?
+    const sourcePath = '~/Code/prototyper/.prototype_src';
+    const projectPath = `~/.prototype/${projectSlug}`;
+
+    // Set up project locally
+    // `npm install` takes forever, just copy contents into new prototype
+    shell.mkdir('-p', projectPath);
+    shell.cp('-r', `${sourcePath}/*`, projectPath);
+
+    // Store project in DB
     return Projects.insert({
       name: args.name,
+      slug: projectSlug,
       created_at: args.created_at,
     });
   },
@@ -23,7 +36,7 @@ Meteor.methods({
   },
 
   'run'() {
-    shell.cd('~/Code/prototyper/.prototype').exec('npm start', {async:true}, (code, stdout, stderr) => {
+    shell.cd('~/.prototype').exec('npm start', {async:true}, (code, stdout, stderr) => {
       console.log('Exit code:', code);
       console.log('Program output:', stdout);
       console.log('Program stderr:', stderr);

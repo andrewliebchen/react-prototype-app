@@ -3,8 +3,10 @@
 </head>
 
 <body>
-  {{> sidebar }}
-  {{> main }}
+  <div class="container">
+    {{> sidebar }}
+    {{> main }}
+  </div>
 </body>
 
 <template name="sidebar">
@@ -25,21 +27,23 @@
 </template>
 
 <template name="main">
-  <div>
-    {{ #if running }}
-      Server is running. Visit <a class="mtr-view">http://localhost:8000</a>.
-    {{ else }}
-      Server is stopped
-    {{ /if }}
-  </div>
-  <div>
-    {{ #if running }}
-      <button class="btn btn-negative mtr-stop">Stop</button>
-    {{ else }}
-      <button class="btn btn-positive mtr-run">Run</button>
-    {{ /if }}
-  </div>
-  <div>
-    <button class="btn btn-default">Open project files</button>
+  <div class="main">
+    <div>
+      {{ #if running }}
+        Server is running. Visit <a class="mtr-view">http://localhost:8000</a>.
+      {{ else }}
+        Server is stopped
+      {{ /if }}
+    </div>
+    <div>
+      {{ #if running }}
+        <button class="btn btn-negative mtr-stop">Stop</button>
+      {{ else }}
+        <button class="btn btn-positive mtr-run">Run</button>
+      {{ /if }}
+    </div>
+    <div>
+      <button class="btn btn-default">Open project files</button>
+    </div>
   </div>
 </template>
