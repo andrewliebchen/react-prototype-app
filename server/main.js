@@ -27,12 +27,12 @@ Meteor.methods({
     });
   },
 
-  'open'(address) {
-    opn(address);
+  'openPrototype'() {
+    opn(`http://localhost:${Meteor.settings.prototypePort}`);
   },
 
   'ping'() {
-    return shell.exec('lsof -t -i :8000').code === 0 ? true : false;
+    return shell.exec(`lsof -t -i :${Meteor.settings.prototypePort}`).code === 0 ? true : false;
   },
 
   'run'(activeProject) {

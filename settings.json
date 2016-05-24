@@ -1,5 +1,5 @@
 {
   "electron": {
   },
-  "prototypeUrl": "http://localhost:8000"
+  "prototypePort": 8000
 }

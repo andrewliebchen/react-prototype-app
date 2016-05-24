@@ -58,7 +58,7 @@ Template.main.helpers({
 Template.main.events({
   'click .mtr-view'(event, instance) {
     event.preventDefault();
-    Meteor.call('open', Meteor.settings.prototypeUrl);
+    Meteor.call('openPrototype');
   },
 
   'click .mtr-run'(event, instance) {
