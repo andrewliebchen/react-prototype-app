@@ -15,9 +15,12 @@
     {{ /if }}
   </div>
   {{ #if running }}
-    <button class="mtr-stop">Stop</button>
+    <button class="btn btn-negative mtr-stop">Stop</button>
   {{ else }}
-    <button class="mtr-run">Run</button>
+    <button class="btn btn-positive mtr-run">Run</button>
   {{ /if }}
-  {{ output }}
+
+  <div>
+    <a>Open project files</a>
+  </div>
 </template>

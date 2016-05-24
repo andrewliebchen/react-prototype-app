@@ -4,6 +4,7 @@ import { Template } from 'meteor/templating';
 import { Electron } from 'meteor/meson:electron';
 
 import './main.html';
+import '../node_modules/photon/dist/css/photon.css';
 
 Meteor.startup(() => {
   Meteor.call('ping', (err, success) => {
@@ -25,7 +26,7 @@ Template.main.helpers({
 Template.main.events({
   'click .mtr-view'(event, instance) {
     event.preventDefault();
-    Meteor.call('open', 'http://localhost:8000');
+    Meteor.call('open', Meteor.settings.prototypeUrl);
   },
 
   'click .mtr-run'(event, instance) {

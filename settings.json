@@ -1,4 +1,5 @@
 {
   "electron": {
-  }
+  },
+  "prototypeUrl": "http://localhost:8000"
 }
