@@ -12,7 +12,7 @@ Meteor.methods({
     const projectSlug = slug(args.name);
     // FIXME: How to get path to local files?
     const sourcePath = '~/Code/prototyper/.prototype_src';
-    const projectPath = `~/.prototype/${projectSlug}`;
+    const projectPath = `~/Sites/${Meteor.settings.appName}/${projectSlug}`;
 
     // Set up project locally
     // `npm install` takes forever, just copy contents into new prototype

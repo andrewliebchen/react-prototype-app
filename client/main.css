@@ -4,8 +4,14 @@
 
 .sidebar {
   flex: 1;
+  height: 100vh;
 }
 
 .main {
   flex: 3;
+  padding: 10px;
+}
+
+.create-project {
+  margin: 10px;
 }
