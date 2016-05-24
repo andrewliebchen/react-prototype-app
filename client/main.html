@@ -47,5 +47,33 @@
         <button class="btn btn-positive mtr-run">Run</button>
       {{ /if }}
     </div>
+    {{> fileTable project=project }}
   </div>
+</template>
+
+<template name="fileTable">
+  <table class="table-striped">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Type</td>
+        <td>Size</td>
+      </tr>
+    </thead>
+    <tbody>
+      {{ #each filePath in files }}
+        {{> fileRow filePath=filePath}}
+      {{ /each }}
+    </tbody>
+  </table>
+</template>
+
+<template name="fileRow">
+  <tr class="mtr-open-file">
+    <td>
+      {{ filePath }}
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
 </template>

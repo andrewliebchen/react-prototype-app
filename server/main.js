@@ -3,6 +3,8 @@ import shell from 'shelljs';
 import opn from 'opn';
 import slug from 'slug';
 
+const projectPathPrefix = `~/Sites/${Meteor.settings.appName}/`;
+
 Meteor.startup(() => {
   // code to run on server at startup
 });
@@ -12,7 +14,7 @@ Meteor.methods({
     const projectSlug = slug(args.name);
     // FIXME: How to get path to local files?
     const sourcePath = '~/Code/prototyper/.prototype_src';
-    const projectPath = `~/Sites/${Meteor.settings.appName}/${projectSlug}`;
+    const projectPath = `${projectPathPrefix}/${projectSlug}`;
 
     // Set up project locally
     // `npm install` takes forever, just copy contents into new prototype
@@ -37,7 +39,7 @@ Meteor.methods({
 
   openProjectFiles(projectId) {
     const projectSlug = Projects.findOne(projectId).slug;
-    opn(`~/Sites/${Meteor.settings.appName}/${projectSlug}`);
+    opn(`${projectPathPrefix}/${projectSlug}`);
   },
 
   openPrototype() {
@@ -49,7 +51,7 @@ Meteor.methods({
   },
 
   run(activeProject) {
-    const activePath = `~/.prototype/${slug(Projects.findOne(activeProject).name)}`;
+    const activePath = `${projectPathPrefix}/${Projects.findOne(activeProject).slug}`;
     shell.cd(activePath).exec('npm start', {async: true}, (code, stdout, stderr) => {
       console.log('Exit code:', code);
       console.log('Program output:', stdout);
@@ -58,10 +60,18 @@ Meteor.methods({
   },
 
   stop() {
-    shell.exec('kill -9 $(lsof -t -i :8000)', {async:true}, (code, stdout, stderr) => {
+    shell.exec('kill -9 $(lsof -t -i :8000)', {async: true}, (code, stdout, stderr) => {
       console.log('Exit code:', code);
       console.log('Program output:', stdout);
       console.log('Program stderr:', stderr);
     });
+  },
+
+  getFiles(activeProject) {
+    return shell.ls(`${projectPathPrefix}/${Projects.findOne(activeProject).slug}/src/*`);
+  },
+
+  openFile(filePath) {
+    opn(filePath, {app: 'textEdit'});
   },
 });

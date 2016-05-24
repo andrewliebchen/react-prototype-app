@@ -7,6 +7,8 @@ import _ from 'lodash';
 import './main.html';
 import '../node_modules/photon/dist/css/photon.css';
 
+Session.setDefault('projectFiles', null);
+
 Meteor.startup(() => {
   Meteor.call('ping', (err, success) => {
     if(success) {
@@ -75,4 +77,21 @@ Template.main.events({
     Meteor.call('stop');
     Session.set('prototypeRunning', false);
   }
+});
+
+Template.fileTable.helpers({
+  files() {
+    Meteor.call('getFiles', this.project._id, (err, files) => {
+      if(files) {
+        Session.set('projectFiles', files)
+      }
+    });
+    return Session.get('projectFiles');
+  },
+});
+
+Template.fileRow.events({
+  'click .mtr-open-file'(event, instance) {
+    Meteor.call('openFile', this.filePath);
+  },
 });
