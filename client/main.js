@@ -33,10 +33,26 @@ Template.sidebar.events({
   },
 });
 
+Template.projectNavItem.helpers({
+  active() {
+    return Session.equals('activeProject', this.project._id);
+  },
+});
+
+Template.projectNavItem.events({
+  'click .mtr-nav-item'(event, instance) {
+    Session.set('activeProject', this.project._id);
+  },
+});
+
 Template.main.helpers({
+  project() {
+    return Projects.findOne(Session.get('activeProject'));
+  },
+
   running() {
     return Session.get('prototypeRunning');
-  }
+  },
 });
 
 Template.main.events({
@@ -46,7 +62,7 @@ Template.main.events({
   },
 
   'click .mtr-run'(event, instance) {
-    Meteor.call('run');
+    Meteor.call('run', Session.get('activeProject'));
     Session.set('prototypeRunning', true);
   },
 

@@ -35,8 +35,9 @@ Meteor.methods({
     return shell.exec('lsof -t -i :8000').code === 0 ? true : false;
   },
 
-  'run'() {
-    shell.cd('~/.prototype').exec('npm start', {async:true}, (code, stdout, stderr) => {
+  'run'(activeProject) {
+    const activePath = `~/.prototype/${slug(Projects.findOne(activeProject).name)}`;
+    shell.cd(activePath).exec('npm start', {async:true}, (code, stdout, stderr) => {
       console.log('Exit code:', code);
       console.log('Program output:', stdout);
       console.log('Program stderr:', stderr);

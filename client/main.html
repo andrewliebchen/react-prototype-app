@@ -11,23 +11,25 @@
 
 <template name="sidebar">
   <aside class="sidebar">
-    <div class="project">
+    <nav class="nav-group">
+      <h5 class="nav-group-title">Projects</h5>
       {{ #each project in projects }}
         {{> projectNavItem project=project }}
       {{ /each }}
-    </div>
+    </nav>
     <button class="btn btn-primary mtr-create-project">New project</button>
   </aside>
 </template>
 
 <template name="projectNavItem">
-  <div class="project">
+  <div class="nav-group-item mtr-nav-item {{ #if active }}active{{ /if }}">
     {{ project.name }}
   </div>
 </template>
 
 <template name="main">
   <div class="main">
+    <h3>{{ project.name }}</h3>
     <div>
       {{ #if running }}
         Server is running. Visit <a class="mtr-view">http://localhost:8000</a>.
