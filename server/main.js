@@ -7,6 +7,13 @@ Meteor.startup(() => {
 });
 
 Meteor.methods({
+  'createProject'(args) {
+    return Projects.insert({
+      name: args.name,
+      created_at: args.created_at,
+    });
+  },
+
   'open'(address) {
     opn(address);
   },
