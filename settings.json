@@ -1,5 +1,6 @@
 {
   "electron": {
+    "autoBuild": false
   },
   "appName": "Prototyper",
   "prototypePort": 8000
