@@ -5,11 +5,11 @@
     "start": "meteor --settings settings.json"
   },
   "dependencies": {
+    "bootstrap-sass": "^3.3.6",
     "lodash": "^4.13.1",
     "meteor-node-stubs": "~0.2.0",
     "opn": "^4.0.2",
     "path-browserify": "0.0.0",
-    "photon": "connors/photon",
     "shelljs": "^0.7.0",
     "slug": "^0.9.1"
   },

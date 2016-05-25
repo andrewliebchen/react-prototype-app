@@ -5,7 +5,6 @@ import { Electron } from 'meteor/meson:electron';
 import _ from 'lodash';
 
 import './main.html';
-import '../node_modules/photon/dist/css/photon.css';
 
 Session.setDefault('projectFiles', null);
 
