@@ -27,11 +27,8 @@ Template.sidebar.helpers({
 });
 
 Template.sidebar.events({
-  'click .mtr-create-project'(event, instance) {
-    Meteor.call('createProject', {
-      name: `Project ${_.random(100, 999)}`,
-      created_at: Date.now(),
-    });
+  'click .mtr-new-project'(event, instance) {
+    FlowRouter.go('/projects/new');
   },
 });
 
@@ -40,12 +37,6 @@ Template.projectNavItem.helpers({
     return Session.equals('activeProject', this.project._id);
   },
 });
-
-// Template.projectNavItem.events({
-//   'click .mtr-nav-item'(event, instance) {
-//     Session.set('activeProject', this.project._id);
-//   },
-// });
 
 Template.projectContent.helpers({
   project() {
@@ -60,7 +51,7 @@ Template.projectContent.helpers({
 Template.projectContent.events({
   'click .mtr-open-project'(event, instance) {
     event.preventDefault();
-    Meteor.call('openProjectFiles', Session.get('activeProject'));
+    Meteor.call('openProjectFiles', FlowRouter.getParam('id'));
   },
 
   'click .mtr-view'(event, instance) {
@@ -69,7 +60,7 @@ Template.projectContent.events({
   },
 
   'click .mtr-run'(event, instance) {
-    Meteor.call('run', Session.get('activeProject'));
+    Meteor.call('run', FlowRouter.getParam('id'));
     Session.set('prototypeRunning', true);
   },
 
@@ -93,5 +84,21 @@ Template.fileTable.helpers({
 Template.fileRow.events({
   'click .mtr-open-file'(event, instance) {
     Meteor.call('openFile', this.filePath);
+  },
+});
+
+Template.newProject.events({
+  'click .mtr-create-project'(event, instance) {
+    event.preventDefault();
+  
+    const projectName = instance.find('.mtr-project-name');
+    if(projectName.value) {
+      Meteor.call('createProject', {
+        name: projectName.value,
+        created_at: Date.now(),
+      }, (err, projectId) => {
+        FlowRouter.go(`/projects/${projectId}`);
+      });
+    }
   },
 });
