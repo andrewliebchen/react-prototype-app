@@ -28,13 +28,13 @@ Template.sidebar.helpers({
 
 Template.sidebar.events({
   'click .mtr-new-project'(event, instance) {
-    FlowRouter.go('/projects/new');
+    FlowRouter.go('/new-project');
   },
 });
 
 Template.projectNavItem.helpers({
   active() {
-    return Session.equals('activeProject', this.project._id);
+    return this.project._id === FlowRouter.getParam('id') ? true : false;
   },
 });
 
@@ -90,7 +90,6 @@ Template.fileRow.events({
 Template.newProject.events({
   'click .mtr-create-project'(event, instance) {
     event.preventDefault();
-  
     const projectName = instance.find('.mtr-project-name');
     if(projectName.value) {
       Meteor.call('createProject', {
@@ -101,4 +100,35 @@ Template.newProject.events({
       });
     }
   },
+});
+
+Template.projectEdit.helpers({
+  project() {
+    return Projects.findOne(FlowRouter.getParam('id'));
+  }
+});
+
+Template.projectEdit.events({
+  'click .mtr-save-project'(event, instance) {
+    event.preventDefault();
+    const projectName = instance.find('.mtr-project-name');
+    if(projectName.value) {
+      Meteor.call('updateProject', {
+        id: FlowRouter.getParam('id'),
+        name: projectName.value,
+        modified_at: Date.now(),
+      }, (err, projectId) => {
+        console.log('Updated!');
+      });
+    }
+  },
+
+  'click .mtr-delete-project'(event, instance) {
+    event.preventDefault();
+    if(window.confirm('You sure you want to delete this project?')) {
+      Meteor.call('deleteProject', FlowRouter.getParam('id'), (err, success) => {
+        FlowRouter.go('/');
+      });
+    }
+  }
 });

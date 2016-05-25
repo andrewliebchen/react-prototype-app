@@ -13,7 +13,7 @@
 
 <template name="home">
   <div>
-    Hi there.
+    <h3>Hi there!</h3>
   </div>
 </template>
 
@@ -47,17 +47,14 @@
       {{ else }}
         Server is stopped
       {{ /if }}
-    </div>
-    <div>
       {{ #if running }}
         <button class="btn btn-negative mtr-stop">Stop</button>
       {{ else }}
         <button class="btn btn-positive mtr-run">Run</button>
       {{ /if }}
+      <a href="/projects/{{ project._id }}/edit">Settings</a>
     </div>
     {{> fileTable project=project }}
-    <button class="btn btn-primary mtr-create-file">New file</button>
-
   </div>
 </template>
 
@@ -89,6 +86,7 @@
 </template>
 
 <template name="newProject">
+  <h3>New project</h3>
   <form>
     <div class="form-group">
       <label>Project name</label>
@@ -97,6 +95,21 @@
     <div class="form-actions">
       <button type="submit" class="btn btn-form btn-default mtr-cancel">Cancel</button>
       <button type="submit" class="btn btn-form btn-primary mtr-create-project">Create project</button>
+    </div>
+  </form>
+</template>
+
+<template name="projectEdit">
+  <a href="/projects/{{ project._id }}">Back</a>
+  <h3>Settings</h3>
+  <form>
+    <div class="form-group">
+      <label>Project name</label>
+      <input type="text" class="form-control mtr-project-name" value="{{ project.name }}">
+    </div>
+    <div class="form-actions">
+      <button class="btn btn-form btn-negative mtr-delete-project">Delete project</button>
+      <button type="submit" class="btn btn-form btn-primary mtr-save-project">Save</button>
     </div>
   </form>
 </template>

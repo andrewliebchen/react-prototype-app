@@ -74,4 +74,17 @@ Meteor.methods({
   openFile(filePath) {
     opn(filePath, {app: 'textEdit'});
   },
+
+  updateProject(args) {
+    return Projects.update(args.id, {
+      $set: {
+        name: args.name,
+        modified_at: args.modified_at,
+      },
+    });
+  },
+
+  deleteProject(projectId) {
+    return Projects.remove({_id: projectId});
+  },
 });
